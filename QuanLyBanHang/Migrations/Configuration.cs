@@ -33,9 +33,11 @@ namespace QuanLyBanHang.Migrations
               p => p.Id,
               new Permission { Id = 1, name = "admin" },
               new Permission { Id = 2, name = "roles" },
-              new Permission { Id = 3, name = "room" },
-              new Permission { Id = 4, name = "service" },
-              new Permission { Id = 5, name = "user" }
+              new Permission { Id = 3, name = "category" },
+              new Permission { Id = 4, name = "product" },
+              new Permission { Id = 5, name = "user" },
+              new Permission { Id = 6, name = "media" }
+              new Permission { Id = 7, name = "order" }
             );
 
             context.Role.AddOrUpdate(
@@ -50,7 +52,9 @@ namespace QuanLyBanHang.Migrations
                 new Permission_Role { Id = 2, Role_Id = 1, Permission_Id = 2 },
                 new Permission_Role { Id = 3, Role_Id = 1, Permission_Id = 3 },
                 new Permission_Role { Id = 4, Role_Id = 1, Permission_Id = 4 },
-                new Permission_Role { Id = 5, Role_Id = 1, Permission_Id = 5 }
+                new Permission_Role { Id = 5, Role_Id = 1, Permission_Id = 5 },
+                new Permission_Role { Id = 6, Role_Id = 1, Permission_Id = 6 },
+                new Permission_Role { Id = 7, Role_Id = 1, Permission_Id = 7 }
              );
 
             context.User.AddOrUpdate(
