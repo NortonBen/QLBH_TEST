@@ -1,0 +1,105 @@
+﻿@model QuanLyBanHang.Models.User
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Layout/_Layout_Site.cshtml";
+}
+
+</div>
+<div class="login">
+
+    <div class="main-agileits">
+        <div class="form-w3agile">
+            <h3>Register</h3>
+            <form  method="post">
+                @Html.AntiForgeryToken()
+                @if (TempData["error"] != null)
+                {
+                    foreach (var item in (Array)TempData["error"])
+                    {
+                        <p>@item</p>
+                    }
+                }
+                <div class="key">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" name="username" required="" placeholder="username" value="@Request["username"]">
+                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" name="fullname" required="" placeholder="fullname" value="@Request["fullname"]" style=" width: 88%;">
+                    @Html.ValidationMessageFor(model => model.fullname, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <input type="text" name="email" required="" placeholder="email" value="@Request["email"]" style="width: 88%;">
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa  fa-user" aria-hidden="true"></i>
+                    <select name="sex"  style="width: 88%;padding: 10px 10px; font-size: 1em; border: none; border-bottom: none; outline: none; color: #999; float: left; background: none;">
+                        <option value="true">Nam</option>
+                        <option value="false">Nữ</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.sex, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa  fa-calendar" aria-hidden="true"></i>
+                    <input type="date" name="birthday" value="@Request["birthday"]" required="" placeholder="birthday" style="width: 88%;padding: 10px 10px; font-size: 1em; border: none; border-bottom: none; outline: none; color: #999; float: left; background: none;" >
+                    @Html.ValidationMessageFor(model => model.sex, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa   fa-edit" aria-hidden="true"></i>
+                    <input type="text" name="address" value="@Request["address"]" required="" placeholder="Address" style="width: 88%;">
+                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa   fa-phone" aria-hidden="true"></i>
+                    <input type="text" name="phone" value="@Request["phone"]" required="" placeholder="Phone" style="width: 88%;">
+                    @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" name="people_id"  value="@Request["people_id"]"  required="" placeholder="people id" style=" width: 88%;">
+                    @Html.ValidationMessageFor(model => model.people_id, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" name="password" required="" placeholder="Password">
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" name="repassword" required="" placeholder="Confirm Password">
+                    <div class="clearfix"></div>
+                </div>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+</div>
+<!-- newsletter -->
+<div class="newsletter">
+    <div class="container">
+        <div class="col-md-6 w3agile_newsletter_left">
+            <h2>Newsletter</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt.</p>
+        </div>
+        <div class="col-md-6 w3agile_newsletter_right">
+            <form action="#" method="post">
+                <input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+                <input type="submit" value="Subscribe" />
+            </form>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+

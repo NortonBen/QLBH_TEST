@@ -1,0 +1,63 @@
+﻿@using QuanLyBanHang.Models;
+@model List<Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/_Layout_Site.cshtml";
+}
+
+<div class="banner-agile">
+    <div class="container">
+        <h2>WELCOME TO</h2>
+        <h3>FASHION <span>CLUB</span></h3>
+        <p>Suspendisse sed tellus id libero pretium interdum. Suspendisse potenti. Quisque consectetur elit sit amet vehicula tristique. </p>
+        <a href="about.html">Read More</a>
+    </div>
+</div>
+
+<div class="top-products">
+    <div class="container">
+        <h3>New Products</h3>
+
+        <div class="resp-tabs-container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 top-product-grids  animated wow slideInUp" data-wow-delay=".5s">
+                        <a href="@Url.Action("index","Product", new { id = item.Id })">
+                            <div class="product-img">
+                                <img src="@item.image" alt="" />
+                                <div class="p-mask">
+                                    <form action="#" method="post">
+                                        <input type="hidden" name="cmd" value="_cart" />
+                                        <input type="hidden" name="add" value="@item.Id" />
+                                        <input type="hidden" name="w3ls1_item" value=">@item.Title" />
+                                        <input type="hidden" name="amount" value="@item.price" />
+                                        <button type="submit" class="w3ls-cart pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </a>
+                        <h4>@item.Title</h4>
+                        <h5>@item.price Đ</h5>
+                    </div>
+                    
+                }
+                <div class="clearfix"></div>
+            </div>
+      
+        </div>
+    </div>
+</div>
+<script src="~/Assets/Site/js/easyResponsiveTabs.js" type="text/javascript"></script>
+<script type="text/javascript">
+		$(document).ready(function () {
+			$('#horizontalTab').easyResponsiveTabs({
+				type: 'default', //Types: default, vertical, accordion
+				width: 'auto', //auto or any width like 600px
+				fit: true   // 100% fit in a container
+			});
+		});
+</script>
+
+
+

@@ -1,0 +1,122 @@
+﻿@using QuanLyBanHang.Helper;
+@model IEnumerable<QuanLyBanHang.Models.Media>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/_Layout_Admin.cshtml";
+}
+<link href="~/Assets/Admin/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/Assets/Admin/js/vue.js"></script>
+<script src="~/Assets/Admin/js/vue.pretty-bytes.js"></script>
+<script src="~/Assets/Admin/js/vue.file-upload.js"></script>
+<script src="~/Assets/Admin/plugins/sweetalert/sweetalert.min.js"></script>
+<style>
+    .box{
+        width: 160px;
+        height: 160px;
+        margin: 10px;
+        float: left;
+        border: 1px solid #eeeeee;
+    }
+    .btn-del{
+        padding: 0px 5px;
+        background-color: red;
+        border-radius: 10px;
+        position: relative;
+        top: -10px;
+        float: right;
+        right: -7px;
+    }
+    .btn-del:active{
+        text-decoration: none;
+    }
+    .text{
+            padding: 8px;
+    }
+</style>
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Media
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0)"  data-toggle="modal" data-target="#uploadModalI">New File</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                @foreach (var item in Model)
+                {
+                    <div class="box">
+                        <a class="btn-del" href="@Url.Action("del",new { Controller ="Media", id = item.Id })">X</a>
+                        <div class="header">
+                            <img  class="img-responsive"  src="@item.url" alt="@item.name" />
+                        </div>
+                        <div class="text">
+                            <p>@item.name</p>
+                        </div> 
+                    </div>                           
+                    
+                }
+                @Html.Raw(Paginate.render(ViewBag.paginate))
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- Default Size -->
+<div class="modal fade" id="uploadModalI" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Modal Upload</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="padding-left: 100px;">
+                    <file-upload class="my-file-uploader" name="myFile" id="myCustomId" action="@Url.Action("Upload","Media")" multiple></file-upload>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var App = new Vue({
+        el: 'body',
+        data: {
+            uploadedFiles: [], // my list for the v-for
+            fileProgress: 0, // global progress
+            allFilesUploaded: false // is everything done?
+        },
+        events: {
+            beforeFileUpload: function (file) {
+                var vm = this;
+                swal({
+                    title: "Wating ... ",
+                    text: "Uploading file",
+                    showConfirmButton: false
+                });
+            },
+            onFileUpload: function (file, res) {
+                swal("Upload Success!", "", "success");
+                window.location.href = location;
+            },
+            onFileError: function (file, res) {
+                swal("Upload Fail!", "", "error");
+            },
+        }
+    });
+
+        
+</script>
+
+

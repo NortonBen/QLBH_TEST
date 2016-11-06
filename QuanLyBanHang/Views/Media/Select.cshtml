@@ -1,0 +1,162 @@
+﻿@using QuanLyBanHang.Helper;
+@model IEnumerable<QuanLyBanHang.Models.Media>
+@{ 
+    var a = new { id = 4 };
+    
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="~/Assets/Admin/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <script src="~/Assets/Admin/js/vue.js"></script>
+    <script src="~/Assets/Admin/js/vue.pretty-bytes.js"></script>
+    <script src="~/Assets/Admin/js/vue.file-upload.js"></script>
+    <script src="~/Assets/Admin/plugins/sweetalert/sweetalert.min.js"></script>
+    <link href="~/Assets/Admin/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="~/Assets/Admin/css/style.css" rel="stylesheet">
+    <link href="~/Assets/Admin/css/themes/all-themes.css" rel="stylesheet" />
+    <style>
+        .box {
+            width: 160px;
+            height: 160px;
+            margin: 10px;
+            float: left;
+            border: 1px solid #eeeeee;
+        }
+
+        .btn-del {
+            padding: 0px 5px;
+            background-color: red;
+            border-radius: 10px;
+            position: relative;
+            top: -10px;
+            float: right;
+            right: -7px;
+        }
+
+            .btn-del:active {
+                text-decoration: none;
+            }
+
+        .text {
+            padding: 8px;
+        }
+
+        .box.box-image.active{
+                border: 1px solid red;
+        }
+    </style>
+
+</head>
+<body>
+ 
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="    padding: 0px;">
+            <div class="card" style="    margin: 0px; box-shadow: none;">
+                <div class="header">
+                    <h2>
+                        Media
+                    </h2>
+                    <div class="header-dropdown m-r--5" style=" float: right; top: -20px; position: relative;">
+                        <input type="text" name="src" />
+                        <button type="button" onclick="get_data();" class="btn btn-success">Select</button>
+                        <a class="btn btn-success" href="javascript:void(0)" data-toggle="modal" data-target="#uploadModal">New File</a>
+                    </div> 
+                    
+                            
+                </div>
+                <div class="body table-responsive" style="margin-top: 10px;">
+                    @foreach (var item in Model)
+                    {
+                        <div class="box box-image" data-img="@(new HtmlString(Json.Encode(item)))">
+                            <a class="btn-del" href="@Url.Action("delselect",new { Controller ="Media", id = item.Id })">X</a>
+                            <div class="header">
+                                <img class="img-responsive" src="@item.url" alt="@item.name" />
+                            </div>
+                            <div class="text">
+                                <p>@item.name</p>
+                            </div>
+                        </div>
+
+                    }
+                    @Html.Raw(Paginate.render(ViewBag.paginate))
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Default Size -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Modal Upload</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding-left: 100px;">
+                        <file-upload class="my-file-uploader" name="myFile" id="myCustomId" action="Upload" multiple></file-upload>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Assets/Admin/plugins/jquery/jquery.min.js"></script>
+
+    <script src="~/Assets/Admin/plugins/node-waves/waves.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="~/Assets/Admin/plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="~/Assets/Admin/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/Assets/Admin/js/admin.js"></script>
+        
+    <script>
+        var select = null;
+        var url = null;
+        function get_data() {
+            window.parent.get_data_media({ url: url }, "@Request["el"]");
+        };
+        jQuery(document).ready(function ($) {
+            $(".box-image").click(function (e) {
+                $(".box-image.active").removeClass("active");
+                $(this).addClass("active");
+                select = this;
+                url = $(this).find("img").attr("src")
+                $("input[name=src]").val(url);
+            })
+        });
+        var App = new Vue({
+            el: 'body',
+            data: {
+                uploadedFiles: [], // my list for the v-for
+                fileProgress: 0, // global progress
+                allFilesUploaded: false // is everything done?
+            },
+            events: {
+                beforeFileUpload: function (file) {
+                    var vm = this;
+                    swal({
+                        title: "Wating ... ",
+                        text: "Uploading file",
+                        showConfirmButton: false
+                    });
+                },
+                onFileUpload: function (file, res) {
+                    swal("Upload Success!", "", "success");
+                    window.location.href = location;
+                },
+                onFileError: function (file, res) {
+                    swal("Upload Fail!", "", "error");
+                },
+            }
+        });
+    </script>
+
+</body>
+</html>
